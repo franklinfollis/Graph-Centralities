@@ -2,6 +2,23 @@ import java.util.*;
 import java.io.*;
 
 public class GraphCentrality {
+	
+	public void degreeCentral(NodeMap nodes){
+		
+		
+	}
+	
+	public void closenessCentral(NodeMap nodes){
+		
+	}
+	
+	public void betweennessCentral(NodeMap nodes){
+		
+	}
+	
+	public void katzCentral(NodeMap nodes){
+		
+	}
 
 	public static void main(String[] args) {
 		NodeMap nodes = new NodeMap();
