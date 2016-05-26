@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Node {
 		private final int id;
@@ -19,6 +20,14 @@ public class Node {
 		
 		public void addIncoming(Node n) {
 			incoming.add(n);
+		}
+		
+		public List<Node> getOutgoing() {
+			return outgoing;
+		}
+		
+		public List<Node> getIncoming() {
+			return incoming;
 		}
 		
 		public int totalEdges() {
