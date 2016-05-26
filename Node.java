@@ -2,14 +2,27 @@ import java.util.ArrayList;
 
 public class Node {
 		private final int id;
-		private final ArrayList<Node> edges = new ArrayList<>();
+		private final ArrayList<Node> outgoing = new ArrayList<>();
+		private final ArrayList<Node> incoming = new ArrayList<>();
 		
 		public Node(int id) {
 			this.id = id;
 		}
 		
-		public void add(Node n) {
-			edges.add(n);
+		public int getID(){
+			return this.id;
+		}
+		
+		public void addOutgoing(Node n) {
+			outgoing.add(n);
+		}
+		
+		public void addIncoming(Node n) {
+			incoming.add(n);
+		}
+		
+		public int totalEdges() {
+			return outgoing.size() + incoming.size();
 		}
 		
 		@Override
@@ -20,7 +33,7 @@ public class Node {
 			
 			String prefix = "";
 			
-			for (Node n : edges) {
+			for (Node n : outgoing) {
 				sb
 					.append(prefix)
 					.append(n.id);

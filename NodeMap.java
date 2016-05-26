@@ -9,12 +9,21 @@ public class NodeMap {
 			return nodes.computeIfAbsent(id, Node::new);
 		}
 		
+		private void addEdge(Node from, Node to) {
+			from.addOutgoing(to);
+			to.addIncoming(from);
+		}
+		
 		public void addEdge(int from, int to) {
-			get(from).add(get(to));
+			addEdge(get(from), get(to));
 		}
 		
 		public int size(){
 			return nodes.size();
+		}
+		
+		public Map<Integer, Node> getMap(){
+			return nodes;
 		}
 		
 		@Override
