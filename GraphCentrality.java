@@ -1,5 +1,7 @@
 import java.util.*;
-import twitter4j.api.*;
+import java.util.stream.Collectors;
+
+import twitter4j.*;
 
 /**
  * Created by Francis on 30/05/2016.
@@ -8,11 +10,19 @@ public class GraphCentrality {
 
     public class NodeScore{
         public Node node;
+        public String name;
         public Float score;
 
         public NodeScore(Node n, Float s){
             node = n;
             score = s;
+
+            try {
+                Twitter twitter = new TwitterFactory().getInstance();
+                name = twitter.showUser((long)n.getID()).getName();
+            } catch (TwitterException te){
+                te.printStackTrace();
+            }
         }
     }
 
@@ -27,7 +37,7 @@ public class GraphCentrality {
 
         float scoreDivisor = nodes.size();
 
-        for (Node node : nodes.getMap().values()) Q.add(node);
+        Q.addAll(nodes.getMap().values());
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
@@ -90,18 +100,14 @@ public class GraphCentrality {
     }
 
     public ArrayList<NodeScore> closenessCentral(NodeMap nodes) {
-        Queue<SortedPair> q = new PriorityQueue<>();
-
-        for (Node n : nodes.getMap().values()) {
-            q.add(new SortedPair(bfsSum(n), n));
-        }
+        Queue<SortedPair> q = nodes.getMap().values().stream().map(n -> new SortedPair(bfsSum(n), n)).collect(Collectors.toCollection(PriorityQueue::new));
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
+
         for(int i = 0; i < 5; i++) {
             SortedPair p = q.poll();
             result.add(i, new NodeScore(p.getNode(), p.getDistance()));
         }
-
         return result;
     }
 
