@@ -9,7 +9,7 @@ public class GraphCentrality {
 			
 			@Override
 			public int compare(Node n1, Node n2){
-				return n2.totalEdges() - n1.totalEdges();
+				return -(n1.totalEdges() - n2.totalEdges());
 			}
 		});
 		
@@ -19,7 +19,7 @@ public class GraphCentrality {
 		
 		System.out.println("\tDEGREE CENTRALITY");
 		
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 5; i++){
 			Node n = Q.poll();
 			System.out.println("Node: " + n.getID() + "\t Score: " + (n.totalEdges()/scoreDivisor));
 		}
@@ -82,18 +82,41 @@ public class GraphCentrality {
 			q.add(new SortedPair(bfs(n), n));
 		}
 		
-		System.out.println("\tDEGREE CENTRALITY");
+		System.out.println("\tCLOSENESS CENTRALITY");
 		
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 5; i++) {
 			SortedPair p = q.poll();
 			System.out.println("Node: " + p.getNode().getID() + "\t Distance: " + (p.getDistance()));
 		}
 	}
 	
-	public void betweennessCentral(NodeMap nodes) {
+/*	public void betweennessCentral(NodeMap nodes) {
+		Queue<Node> queue = new ArrayDeque<>();
+		Map<Integer,Integer> distances = new HashMap<>();
 		
+		queue.add(start);
+		distances.put(start.getID(), 0);
+		
+		int sum = 0;
+		
+		while (!queue.isEmpty()) {
+			Node n = queue.remove();
+			
+			int dist = distances.get(n.getID());
+			
+			for (Node e : n.getIncoming()) {
+				if (!distances.containsKey(e.getID())) {
+					queue.add(e);
+					distances.put(e.getID(), dist+1);
+
+					sum += 1.f / (dist + 1);
+				}
+			}
+		}
+		
+		return sum;
 	}
-	
+	*/
 	public void katzCentral(NodeMap nodes) {
 		
 	}
@@ -101,7 +124,7 @@ public class GraphCentrality {
 	public static void main(String[] args) {
 		NodeMap nodes = new NodeMap();
 		
-		try (Scanner sc = new Scanner(new File("graph2.txt"))) {
+		try (Scanner sc = new Scanner(new File("graph1.txt"))) {
 			while(sc.hasNextInt()) {
 				int from = sc.nextInt();
 				
@@ -112,10 +135,9 @@ public class GraphCentrality {
 				nodes.addEdge(from, to);
 			}
 			
-			System.out.println(nodes);
-			
-			//degreeCentral(nodes);
 			closenessCentral(nodes);
+			System.out.println();
+			degreeCentral(nodes);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
