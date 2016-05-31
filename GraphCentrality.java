@@ -2,6 +2,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import twitter4j.*;
+import twitter4j.api.UsersResources;
 
 /**
  * Created by Francis on 30/05/2016.
@@ -11,6 +12,7 @@ public class GraphCentrality {
     public class NodeScore{
         public Node node;
         public String name;
+        public String handle;
         public Float score;
 
         public NodeScore(Node n, Float s){
@@ -19,7 +21,9 @@ public class GraphCentrality {
 
             try {
                 Twitter twitter = new TwitterFactory().getInstance();
-                name = twitter.showUser((long)n.getID()).getName();
+                User u = twitter.showUser((long)n.getID());
+                name = u.getName();
+                handle = u.getScreenName();
             } catch (TwitterException te){
                 te.printStackTrace();
             }
@@ -63,7 +67,7 @@ public class GraphCentrality {
 
             int dist = distances.get(n.getID());
 
-            for (Node e : n.getIncoming()) {
+            for (Node e : n.getEdges()) {
                 if (!distances.containsKey(e.getID())) {
                     queue.add(e);
                     distances.put(e.getID(), dist+1);

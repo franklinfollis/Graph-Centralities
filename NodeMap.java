@@ -13,8 +13,8 @@ public class NodeMap {
     }
 
     private void addEdge(Node from, Node to) {
-        from.addOutgoing(to);
-        to.addIncoming(from);
+        from.addEdge(to);
+        to.addEdge(from);
     }
 
     public void addEdge(int from, int to) {

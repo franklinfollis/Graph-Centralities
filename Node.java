@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Francis on 30/05/2016.
  */
 public class Node {
     private final int id;
-    private final ArrayList<Node> outgoing = new ArrayList<>();
-    private final ArrayList<Node> incoming = new ArrayList<>();
+    private final Set<Node> edges = new HashSet<>();
 
     public Node(int id) {
         this.id = id;
@@ -17,24 +18,16 @@ public class Node {
         return this.id;
     }
 
-    public void addOutgoing(Node n) {
-        outgoing.add(n);
+    public void addEdge(Node n) {
+        edges.add(n);
     }
 
-    public void addIncoming(Node n) {
-        incoming.add(n);
-    }
-
-    public List<Node> getOutgoing() {
-        return outgoing;
-    }
-
-    public List<Node> getIncoming() {
-        return incoming;
+    public Set<Node> getEdges() {
+        return edges;
     }
 
     public int totalEdges() {
-        return outgoing.size() + incoming.size();
+        return edges.size();
     }
 
     @Override
@@ -45,7 +38,7 @@ public class Node {
 
         String prefix = "";
 
-        for (Node n : outgoing) {
+        for (Node n : edges) {
             sb
                     .append(prefix)
                     .append(n.id);
