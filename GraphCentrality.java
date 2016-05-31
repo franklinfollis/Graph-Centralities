@@ -100,7 +100,12 @@ public class GraphCentrality {
     }
 
     public ArrayList<NodeScore> closenessCentral(NodeMap nodes) {
-        Queue<SortedPair> q = nodes.getMap().values().stream().map(n -> new SortedPair(bfsSum(n), n)).collect(Collectors.toCollection(PriorityQueue::new));
+        Queue<SortedPair> q = nodes
+            .getMap()
+            .values()
+            .stream()
+            .map(n -> new SortedPair(bfsSum(n), n))
+            .collect(Collectors.toCollection(PriorityQueue::new));
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
