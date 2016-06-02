@@ -35,8 +35,8 @@ public class main {
             System.out.printf("\n%60s\n","CLOSENESS CENTRALITY");
             close.stream().forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
 
-            //System.out.println("\n\t\t\t\tBETWEENNESS CENTRALITY");
-            //between.stream().forEach(ns -> System.out.println(String.format("Node: " + ns.node.getID() + "\tDistance: " + "%.7f" + "\tName: " + ns.name, ns.score)));
+            System.out.printf("\n%60s\n","BETWEENNESS CENTRALITY");
+            between.stream().forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
 
 
         } catch (IOException ex) {
