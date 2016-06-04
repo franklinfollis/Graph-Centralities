@@ -38,7 +38,6 @@ public class main {
             System.out.printf("\n%60s\n","BETWEENNESS CENTRALITY");
             between.stream().forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
 
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
