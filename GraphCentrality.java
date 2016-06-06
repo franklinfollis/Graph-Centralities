@@ -1,7 +1,8 @@
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import twitter4j.*;
+//import twitter4j.*;
 
 /**
  * Created by Francis on 30/05/2016.
@@ -9,6 +10,8 @@ import twitter4j.*;
 public class GraphCentrality {
 
     public GraphAlgorithm ga = new GraphAlgorithm();
+    public ArrayList<GetComputerScientist.ComputerScientist> cs = new GetComputerScientist().getComputerScientists();
+    public Map<Integer, GetComputerScientist.ComputerScientist> csTwitter = new HashMap<>();
 
     public class NodeScore{
         public Node node;
@@ -17,10 +20,12 @@ public class GraphCentrality {
         public Float score;
 
         public NodeScore(Node n, Float s){
+            Random myRandomizer = new Random();
+            csTwitter.computeIfAbsent(n.getID(), a -> cs.remove(myRandomizer.nextInt(cs.size())));
             node = n;
             score = s;
-            name = "Joe Johnson";
-            handle = "@lolcatz";
+            name = csTwitter.get(n.getID()).name;
+            handle = csTwitter.get(n.getID()).twitterHandle;
             /*try {
                 Twitter twitter = new TwitterFactory().getInstance();
                 User u = twitter.showUser((long)n.getID());
@@ -64,13 +69,11 @@ public class GraphCentrality {
             }
         });
 
-        float scoreDivisor = nodes.size();
-
         Q.addAll(nodes.getMap().values());
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 5; i++){
             Node n = Q.poll();
             result.add(i, new NodeScore(n, (float)n.totalEdges()));
         }
@@ -88,7 +91,7 @@ public class GraphCentrality {
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < 5; i++) {
             SortedPair p = q.poll();
             result.add(i, new NodeScore(p.getNode(), p.getDistance()));
         }
@@ -113,7 +116,7 @@ public class GraphCentrality {
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 5; i++){
             SortedPair n = q.poll();
             result.add(new NodeScore(n.node, n.distance));
         }
@@ -131,7 +134,7 @@ public class GraphCentrality {
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < 5; i++) {
             SortedPair p = q.poll();
             result.add(i, new NodeScore(p.getNode(), p.getDistance()));
         }
