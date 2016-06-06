@@ -98,4 +98,34 @@ public class GraphAlgorithm {
             if(w != start) b.computeIfAbsent(w, MuteFloat::new).value += wData.dependency;
         }
     }
+
+    public float bfsKatz(Node start){
+        float alpha = 0.5f;
+
+        Queue<Node> queue = new ArrayDeque<>();
+        Map<Integer,Integer> distances = new HashMap<>();
+
+        queue.add(start);
+        distances.put(start.getID(), 0);
+
+        float sum = 0;
+
+        while (!queue.isEmpty()) {
+            Node n = queue.remove();
+
+            int dist = distances.get(n.getID());
+
+            for (Node e : n.getEdges()) {
+                if (!distances.containsKey(e.getID())) {
+                    queue.add(e);
+                    distances.put(e.getID(), dist+1);
+
+                    sum += Math.pow(alpha, (dist+1));
+                }
+            }
+        }
+
+        return sum;
+
+    }
 }

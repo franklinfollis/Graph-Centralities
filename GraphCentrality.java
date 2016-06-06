@@ -19,15 +19,16 @@ public class GraphCentrality {
         public NodeScore(Node n, Float s){
             node = n;
             score = s;
-
-            try {
+            name = "Joe Johnson";
+            handle = "@lolcatz";
+            /*try {
                 Twitter twitter = new TwitterFactory().getInstance();
                 User u = twitter.showUser((long)n.getID());
                 name = u.getName();
                 handle = u.getScreenName();
             } catch (TwitterException te){
                 te.printStackTrace();
-            }
+            }*/
         }
     }
 
@@ -69,9 +70,9 @@ public class GraphCentrality {
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 4; i++){
             Node n = Q.poll();
-            result.add(i, new NodeScore(n, n.totalEdges()/scoreDivisor));
+            result.add(i, new NodeScore(n, (float)n.totalEdges()));
         }
 
         return result;
@@ -87,7 +88,7 @@ public class GraphCentrality {
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 4; i++) {
             SortedPair p = q.poll();
             result.add(i, new NodeScore(p.getNode(), p.getDistance()));
         }
@@ -105,14 +106,14 @@ public class GraphCentrality {
                 .forEach(n -> ga.brandesAlg(n, betweens));
 
         Queue<SortedPair> q = betweens
-        .keySet()
+                .keySet()
                 .stream()
                 .map(n -> new SortedPair(betweens.getOrDefault(n, new GraphAlgorithm.MuteFloat(n)).value, n))
                 .collect(Collectors.toCollection(PriorityQueue::new));
 
         ArrayList<NodeScore> result = new ArrayList<>(5);
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < 4; i++){
             SortedPair n = q.poll();
             result.add(new NodeScore(n.node, n.distance));
         }
@@ -121,7 +122,20 @@ public class GraphCentrality {
     }
 
     public ArrayList<NodeScore> katzCentral(NodeMap nodes) {
-        return null;
+        Queue<SortedPair> q = nodes
+                .getMap()
+                .values()
+                .stream()
+                .map(n -> new SortedPair(ga.bfsKatz(n), n))
+                .collect(Collectors.toCollection(PriorityQueue::new));
+
+        ArrayList<NodeScore> result = new ArrayList<>(5);
+
+        for(int i = 0; i < 4; i++) {
+            SortedPair p = q.poll();
+            result.add(i, new NodeScore(p.getNode(), p.getDistance()));
+        }
+        return result;
     }
 }
 
