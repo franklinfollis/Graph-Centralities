@@ -35,7 +35,7 @@ public class GraphAlgorithm {
         queue.add(start);
         distances.put(start.getID(), 0);
 
-        int sum = 0;
+        float sum = 0;
 
         while (!queue.isEmpty()) {
             Node n = queue.remove();
