@@ -24,6 +24,7 @@ public class main {
                 nodes.addEdge(from, to);
             }
 
+
             long start = System.currentTimeMillis();
             ArrayList<GraphCentrality.NodeScore> degree = gc.degreeCentral(nodes);
             long finish = System.currentTimeMillis();
@@ -46,16 +47,16 @@ public class main {
 
 
             System.out.printf("%60s\n","DEGREE CENTRALITY");
-            degree.stream().forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
+            degree.forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
 
             System.out.printf("\n%60s\n","CLOSENESS CENTRALITY");
-            close.stream().forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
+            close.forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
 
             System.out.printf("\n%60s\n","BETWEENNESS CENTRALITY");
-            between.stream().forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
+            between.forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
 
             System.out.printf("\n%60s\n","KATZ CENTRALITY");
-            katz.stream().forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
+            katz.forEach(ns -> System.out.printf("Node: %-20s Score: %-20.7f Name: %-20s Username: @%-20s\n",ns.node.getID(), ns.score , ns.name, ns.handle));
 
         } catch (IOException ex) {
             ex.printStackTrace();
