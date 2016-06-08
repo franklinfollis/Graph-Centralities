@@ -11,9 +11,10 @@ public class main {
 
     public static void main(String[] args) {
         GraphCentrality gc = new GraphCentrality();
+        if(args.length == 2 && args[1].equals("twitter")) gc.twit = true;
         NodeMap nodes = new NodeMap();
 
-        try (Scanner sc = new Scanner(new File("graph1.txt"))) {
+        try (Scanner sc = new Scanner(new File(args[0]))) {
             while(sc.hasNextInt()) {
                 int from = sc.nextInt();
 
@@ -24,26 +25,13 @@ public class main {
                 nodes.addEdge(from, to);
             }
 
-
-            long start = System.currentTimeMillis();
             ArrayList<GraphCentrality.NodeScore> degree = gc.degreeCentral(nodes);
-            long finish = System.currentTimeMillis();
-            System.out.println("DEGREE Time :" + (finish - start) + "ms\n");
 
-            start = System.currentTimeMillis();
             ArrayList<GraphCentrality.NodeScore> close = gc.closenessCentral(nodes);
-            finish = System.currentTimeMillis();
-            System.out.println("CLOSENESS Time :" + (finish - start) + "ms\n");
 
-            start = System.currentTimeMillis();
             ArrayList<GraphCentrality.NodeScore> between = gc.betweennessCentral(nodes);
-            finish = System.currentTimeMillis();
-            System.out.println("BETWEENNESS Time :" + (finish - start) + "ms\n");
 
-            start = System.currentTimeMillis();
             ArrayList<GraphCentrality.NodeScore> katz = gc.katzCentral(nodes);
-            finish = System.currentTimeMillis();
-            System.out.println("KATZ Time :" + (finish - start) + "ms\n");
 
 
             System.out.printf("%60s\n","DEGREE CENTRALITY");

@@ -2,7 +2,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
-//import twitter4j.*;
+import twitter4j.*;
 
 /**
  * Created by Francis on 30/05/2016.
@@ -12,6 +12,7 @@ public class GraphCentrality {
     public GraphAlgorithm ga = new GraphAlgorithm();
     public ArrayList<GetComputerScientist.ComputerScientist> cs = new GetComputerScientist().getComputerScientists();
     public Map<Integer, GetComputerScientist.ComputerScientist> csTwitter = new HashMap<>();
+    public boolean twit = false;
 
     public class NodeScore{
         public Node node;
@@ -26,14 +27,16 @@ public class GraphCentrality {
             score = s;
             name = csTwitter.get(n.getID()).name;
             handle = csTwitter.get(n.getID()).twitterHandle;
-            /*try {
-                Twitter twitter = new TwitterFactory().getInstance();
-                User u = twitter.showUser((long)n.getID());
-                name = u.getName();
-                handle = u.getScreenName();
-            } catch (TwitterException te){
-                te.printStackTrace();
-            }*/
+            if(twit) {
+                try {
+                    Twitter twitter = new TwitterFactory().getInstance();
+                    User u = twitter.showUser((long) n.getID());
+                    name = u.getName();
+                    handle = u.getScreenName();
+                } catch (TwitterException te) {
+                    te.printStackTrace();
+                }
+            }
         }
     }
 
